@@ -4,24 +4,24 @@ ENV PATH=/root/.cargo/bin:$PATH
 
 COPY ["cargo.config", "/build/"]
 
-RUN	set -x && \
-	apt-get update && \
-	apt-get install \
+RUN	set -x \
+&&	apt-get update \
+&&	apt-get install \
+		build-essential \
 		curl \
 		file \
+		gcc-4.7-multilib-arm-linux-gnueabi \
 		git \
 		nano \
-		build-essential \
-		gcc-4.7-multilib-arm-linux-gnueabi \
 		-y && \
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | \
-	sh -s -- --default-toolchain stable -y && \
-	rustup target add arm-unknown-linux-musleabi arm-unknown-linux-gnueabi && \
-	git clone https://github.com/cloudflare/boringtun /build/boringtun
+	sh -s -- --default-toolchain stable -y \
+&&	rustup target add arm-unknown-linux-musleabi arm-unknown-linux-gnueabi \
+&&	git clone https://github.com/cloudflare/boringtun /build/boringtun
 
-RUN 	cd /build/boringtun && \
-	cat /build/cargo.config >> .cargo/config && \
-	for TARGET in "arm-unknown-linux-musleabi" "arm-unknown-linux-gnueabi" "x86_64-unknown-linux-gnu"; \
+RUN 	cd /build/boringtun \
+&&	cat /build/cargo.config >> .cargo/config \
+&&	for TARGET in "arm-unknown-linux-musleabi" "arm-unknown-linux-gnueabi" "x86_64-unknown-linux-gnu"; \
 	do \
 		echo "======= Building ${TARGET} ======="; \
 		cargo build --release --bin boringtun --target ${TARGET}; \
