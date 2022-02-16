@@ -17,6 +17,8 @@ The arm executables are usable on [OpenWRT](https://openwrt.org/), [AsusWRT](htt
 
 The included script `generate-artifacts.sh` executes the docker build and places the generated artifacts into `./dist`.
 
+The `wg-go` utility to allow WireGuard configuration on ARM devices can be installed from https://github.com/seud0nym/openwrt-wireguard-go/.
+
 ### Usage ###
 
 In order to use this on a ARM based kernel 2.6 router, the following steps are needed:
