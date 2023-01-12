@@ -9,8 +9,19 @@ env:
   TARGETS: "aarch64-unknown-linux-gnu,aarch64-unknown-linux-musl,armv7-unknown-linux-gnueabihf,x86_64-unknown-linux-gnu,x86_64-unknown-linux-musl"
 
 jobs:
+  prepare:
+    name: Prepare local assets
+    steps:
+      - name: Checkout Local
+        uses: actions/checkout@v3
+      - name: Make assets available
+        uses: actions/upload-artifact@v3
+        with:
+          name: config-append.toml
+          path: config-append.toml
   build:
     name: Build Binaries
+    needs: prepare
     runs-on: ubuntu-latest
     steps:
       - name: Checkout boringtun
@@ -18,6 +29,10 @@ jobs:
         with:
           repository: cloudflare/boringtun
           ref: boringtun-cli-0.5.2
+      - name: Get local assets
+        uses: actions/download-artifact@v3
+        with:
+          name: config-append.toml
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -28,6 +43,8 @@ jobs:
           cargo install cross --git https://github.com/cross-rs/cross
       - name: Compile Binaries
         run: |
+          cat config-append.toml >> ~/.cargo/config.toml
+
           mkdir -p dist
 
           for TARGET in ${TARGETS//,/ }
