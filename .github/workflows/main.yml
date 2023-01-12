@@ -11,6 +11,7 @@ env:
 jobs:
   prepare:
     name: Prepare local assets
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Local
         uses: actions/checkout@v3
