@@ -15,11 +15,16 @@ jobs:
         with:
           repository: cloudflare/boringtun
           ref: boringtun-cli-0.5.2
-      - uses: dtolnay/rust-toolchain@stable
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: stable
           targets: aarch64-unknown-linux-gnu, armv7-unknown-linux-gnueabihf, x86_64-unknown-linux-gnu
-      - run: |
+      - name: Install Cross for Cargo
+        run: |
+          cargo install cross --git https://github.com/cross-rs/cross
+      - name: Compile Binaries
+        run: |
           mkdir -p dist
           cross build --release --target=aarch64-unknown-linux-gnu
           XZ_OPT=-9 tar -C target/aarch64-unknown-linux-gnu/release -Jcvf dist/boringtun-cli-0.5.2-aarch64-unknown-linux-gnu.tar.xz boringtun-cli
@@ -28,4 +33,3 @@ jobs:
         with:
           files: |
             dist/boringtun-cli-0.5.2-aarch64-unknown-linux-gnu.tar.xz
-
