@@ -15,7 +15,6 @@ jobs:
           - aarch64-unknown-linux-gnu
           - armv7-unknown-linux-gnueabihf
           - x86_64-unknown-linux-gnu
-          - x86_64-apple-darwin
     steps:
       - name: Checkout boringtun
         uses: actions/checkout@v3
