@@ -6,8 +6,8 @@ on:
       - '*'
 
 jobs:
-  build:
-    name: Build Binaries
+  setup:
+    name: Prepare build environment
     runs-on: ubuntu-latest
     steps:
       - name: Checkout boringtun
@@ -23,6 +23,10 @@ jobs:
       - name: Install Cross for Cargo
         run: |
           cargo install cross --git https://github.com/cross-rs/cross
+  build:
+    needs: setup
+    name: Build Binaries
+    runs-on: ubuntu-latest
       - name: Compile Binaries
         run: |
           mkdir -p dist
