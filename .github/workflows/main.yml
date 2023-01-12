@@ -27,6 +27,7 @@ jobs:
     needs: setup
     name: Build Binaries
     runs-on: ubuntu-latest
+    steps:
       - name: Compile Binaries
         run: |
           mkdir -p dist
