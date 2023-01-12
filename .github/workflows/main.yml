@@ -1,0 +1,49 @@
+name: Build multi-architecture binaries
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    name: Build Binaries
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target:
+          - aarch64-unknown-linux-gnu
+          - armv7-unknown-linux-gnueabihf
+          - x86_64-unknown-linux-gnu
+          - x86_64-apple-darwin
+    steps:
+      - name: Checkout boringtun
+        uses: actions/checkout@v3
+        with:
+          repository: cloudflare/boringtun
+          ref: boringtun-cli-0.5.2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: ${{ matrix.target }}
+          override: true
+      - uses: actions-rs/cargo@v1
+        with:
+          use-cross: true
+          command: build
+          args: --release --target=${{ matrix.target }}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.target }}
+          path: target/${{ matrix.target }}/release/boringtun-cli
+      - name: Determine Image ID and Version
+        id: image_id
+        run: |
+          ls -latR
+#      - name: Release
+#        uses: softprops/action-gh-release@v1
+#        with:
+#          files: |
+#            dist/openconnect-server-linux-amd64.tar.xz
+#            dist/openconnect-server-linux-arm64.tar.xz
+#            dist/openconnect-server-linux-arm-v7.tar.xz
