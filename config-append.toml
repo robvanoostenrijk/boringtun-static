@@ -25,6 +25,3 @@ rustflags = ["-C", "target-feature=+crt-static", "-C", "link-arg=-s"]
 
 [target.arm-unknown-linux-gnueabihf]
 rustflags = ["-C", "target-feature=+crt-static", "-C", "link-arg=-s"]
-
-[target.armv5te-unknown-linux-musleabi]
-rustflags = ["-C", "target-feature=+crt-static", "-C", "link-arg=-s"]
