@@ -6,7 +6,7 @@ on:
       - '*'
 
 env:
-  TARGETS: "aarch64-unknown-linux-gnu,aarch64-unknown-linux-musl,armv7-unknown-linux-gnueabihf,x86_64-unknown-linux-gnu,x86_64-unknown-linux-musl"
+  TARGETS: "aarch64-unknown-linux-gnu,aarch64-unknown-linux-musl,armv7-unknown-linux-gnueabihf,armv7-unknown-linux-musleabi,armv7-unknown-linux-musleabihf,x86_64-unknown-linux-gnu,x86_64-unknown-linux-musl,x86_64-unknown-freebsd,mips-unknown-linux-gnu,arm-unknown-linux-gnueabihf,armv5te-unknown-linux-musleabi"
 
 jobs:
   prepare:
