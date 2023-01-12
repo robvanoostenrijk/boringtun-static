@@ -4,14 +4,29 @@ This repository leverages GitHub Actions and [cross-rs](https://github.com/cross
 
 Compilation is done using Cargo/Cross and results in the following executables:
 
-    /arm-unknown-linux-musleabi (1.4Mb)
-    boringtun: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, stripped
+- aarch64-unknown-linux-gnu  
+boringtun-cli: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, BuildID[sha1]=0f13c4a1a8a819208ea0b93c837dfc47211bbf7a, for GNU/Linux 3.7.0, stripped
 
-    /arm-unknown-linux-gnueabi (1.8Mb)
-    boringtun: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, for GNU/Linux 2.6.32, stripped
+- aarch64-unknown-linux-musl  
+boringtun-cli: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
 
-    /x86_64-unknown-linux-gnu (2.2Mb)
-    boringtun: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, for GNU/Linux 2.6.24, stripped
+- arm-unknown-linux-gnueabihf  
+boringtun-cli: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, for GNU/Linux 4.19.21, stripped
+
+- armv7-unknown-linux-gnueabihf  
+boringtun-cli: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, BuildID[sha1]=3290baffa4a932ab7cf000d5093b704723cf5d62, for GNU/Linux 3.2.0, stripped
+
+- armv7-unknown-linux-musleabi  
+boringtun-cli: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, stripped
+
+- armv7-unknown-linux-musleabihf  
+boringtun-cli: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, stripped
+
+- x86_64-unknown-linux-gnu  
+boringtun-cli: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), static-pie linked, BuildID[sha1]=da39374a83d5a581ed75d072a620352d3946c785, for GNU/Linux 3.2.0, stripped
+
+- x86_64-unknown-linux-musl  
+boringtun-cli: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), static-pie linked, stripped
 
 The arm executables are usable on [OpenWRT](https://openwrt.org/), [AsusWRT](https://www.asuswrt-merlin.net/) & [DD-WRT](https://dd-wrt.com/) routers.
 
