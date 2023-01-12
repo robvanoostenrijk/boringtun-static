@@ -20,9 +20,9 @@ jobs:
           ref: boringtun-cli-0.5.2
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
-        with: ${{ env.TARGETS }}
+        with:
           toolchain: stable
-          targets: 
+          targets: ${{ env.TARGETS }}
       - name: Install Cross for Cargo
         run: |
           cargo install cross --git https://github.com/cross-rs/cross
