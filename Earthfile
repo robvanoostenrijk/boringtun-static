@@ -5,7 +5,8 @@ clean:
 	RUN rm -f -R ./dist
 
 build:
-	FROM DOCKERFILE .
+	ARG TAG
+	FROM DOCKERFILE --build-arg BORINGTUN_TAG=$TAG .
 
 package:
 	FROM +build
@@ -22,5 +23,6 @@ package:
 	SAVE ARTIFACT /usr/src/boringtun/dist/boringtun.tar.xz AS LOCAL ./dist/boringtun-legacy-kernel.tar.xz
 
 all:
+	ARG tag
 	BUILD +clean
-	BUILD --platform=linux/amd64 +package
+	BUILD --platform=linux/amd64 +package --TAG=$TAG

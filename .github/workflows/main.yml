@@ -23,10 +23,15 @@ jobs:
           path: config-append.toml
       - name: Install Earthly
         run: |
-          sudo /bin/sh -c 'wget https://github.com/earthly/earthly/releases/download/v0.6.30/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'
+          sudo /bin/sh -c "wget https://github.com/earthly/earthly/releases/download/v0.6.30/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly"
       - name: Build artifacts using Earthly
         run: |
-          earthly +all
+          earthly +all --TAG=${TAG}
+      - name: Upload legacy kernel compilation artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: boringtun-legacy-kernel.tar.xz
+          path: dist/boringtun-legacy-kernel.tar.xz
   build:
     name: Build binaries using Cargo/Cross
     needs: legacy
@@ -60,8 +65,14 @@ jobs:
             cross build --release --target=${TARGET}
             XZ_OPT=-9 tar -C target/${TARGET}/release -Jcvf dist/boringtun-cli-${TAG}-${TARGET}.tar.xz boringtun-cli
           done
+      - name: Get legacy kernel compilation artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: boringtun-legacy-kernel.tar.xz
+          path: dist/boringtun-legacy-kernel.tar.xz
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
             dist/*
+

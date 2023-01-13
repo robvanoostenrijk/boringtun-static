@@ -1,8 +1,9 @@
 # syntax=docker/dockerfile:1.4
 FROM ubuntu:14.04
 
-ENV PATH=/root/.cargo/bin:$PATH \
-	BORINGTUN_TAG=0.5.2
+ARG BORINGTUN_TAG
+
+ENV PATH=/root/.cargo/bin:$PATH
 
 COPY ["config-legacy-append.toml", "/usr/src/"]
 COPY ["atomic-u32.patch", "/usr/src"]
