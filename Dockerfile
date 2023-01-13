@@ -11,6 +11,12 @@ COPY ["atomic-u32.patch", "/usr/src"]
 RUN <<EOF
 set -x
 echo Compiling for boringtun-cli-${BORINGTUN_TAG}
+
+# GitHub Runners are on Azure, use Azure Ubuntu mirrors
+rm /etc/apt/sources.list.d/ubuntu-esm-infra-trusty.list
+sed --in-place --regexp-extended "s/(\/\/)(archive\.ubuntu)/\1azure.\2/" /etc/apt/sources.list
+sed --in-place --regexp-extended "s/(deb http:\/\/security.ubuntu.com)/#\1/" /etc/apt/sources.list
+
 apt-get update
 apt-get install \
 	build-essential \
