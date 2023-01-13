@@ -4,7 +4,7 @@ This repository leverages GitHub Actions and [cross-rs](https://github.com/cross
 
 Compilation is done using Cargo/Cross and results in the following executables:
 
-- aarch64-unknown-linux-gnu :white_check_mark: <sup><sub>Officially supported target</sub></sup>  
+- aarch64-unknown-linux-gnu <sup><sub>:white_check_mark: Officially supported target</sub></sup>  
 boringtun-cli: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, for GNU/Linux 3.7.0, stripped
 
 - aarch64-unknown-linux-musl  
@@ -13,7 +13,7 @@ boringtun-cli: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statica
 - arm-unknown-linux-gnueabihf  
 boringtun-cli: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, for GNU/Linux 4.19.21, stripped
 
-- armv7-unknown-linux-gnueabihf :white_check_mark: <sup><sub>Officially supported target</sub></sup>  
+- armv7-unknown-linux-gnueabihf <sup><sub>:white_check_mark: Officially supported target</sub></sup>  
 boringtun-cli: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, for GNU/Linux 3.2.0, stripped
 
 - armv7-unknown-linux-musleabi  
@@ -22,7 +22,7 @@ boringtun-cli: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), staticall
 - armv7-unknown-linux-musleabihf  
 boringtun-cli: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, stripped
 
-- x86_64-unknown-linux-gnu :white_check_mark: <sup><sub>Officially supported target</sub></sup>  
+- x86_64-unknown-linux-gnu <sup><sub>:white_check_mark: Officially supported target</sub></sup>  
 boringtun-cli: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), static-pie linked, for GNU/Linux 3.2.0, stripped
 
 - x86_64-unknown-linux-musl  
