@@ -1,4 +1,4 @@
-name: Build multi-architecture binaries
+name: Build and deploy multi-architecture binaries
 
 on:
   push:
@@ -10,20 +10,26 @@ env:
   TARGETS: "aarch64-unknown-linux-gnu,aarch64-unknown-linux-musl,armv7-unknown-linux-gnueabihf,armv7-unknown-linux-musleabi,armv7-unknown-linux-musleabihf,x86_64-unknown-linux-gnu,x86_64-unknown-linux-musl,arm-unknown-linux-gnueabihf"
 
 jobs:
-  prepare:
-    name: Prepare local assets
+  legacy:
+    name: Build legacy kernel versions
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Local
         uses: actions/checkout@v3
-      - name: Make assets available
+      - name: Make Cargo config available to other builds
         uses: actions/upload-artifact@v3
         with:
           name: config-append.toml
           path: config-append.toml
+      - name: Install Earthly
+        run: |
+          sudo /bin/sh -c 'wget https://github.com/earthly/earthly/releases/download/v0.6.30/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'
+      - name: Build artifacts using Earthly
+        run: |
+          earthly +all
   build:
-    name: Build Binaries
-    needs: prepare
+    name: Build binaries using Cargo/Cross
+    needs: legacy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout boringtun
@@ -31,7 +37,7 @@ jobs:
         with:
           repository: cloudflare/boringtun
           ref: boringtun-cli-${{ env.TAG }}
-      - name: Get local assets
+      - name: Get Cargo config additions
         uses: actions/download-artifact@v3
         with:
           name: config-append.toml
