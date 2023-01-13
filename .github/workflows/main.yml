@@ -16,36 +16,21 @@ jobs:
     steps:
       - name: Checkout Local
         uses: actions/checkout@v3
-      - name: Make Cargo config available to other builds
-        uses: actions/upload-artifact@v3
-        with:
-          name: config-append.toml
-          path: config-append.toml
       - name: Install Earthly
         run: |
           sudo /bin/sh -c "wget https://github.com/earthly/earthly/releases/download/v0.6.30/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly"
       - name: Build artifacts using Earthly
         run: |
           earthly +all --TAG="$TAG"
-      - name: Upload legacy kernel compilation artifact
-        uses: actions/upload-artifact@v3
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          name: boringtun-legacy-kernel.tar.xz
-          path: dist/boringtun-legacy-kernel.tar.xz
-  build:
+          files: |
+            dist/boringtun-legacy-kernel.tar.xz
+  cross:
     name: Build binaries using Cargo/Cross
-    needs: legacy
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout boringtun
-        uses: actions/checkout@v3
-        with:
-          repository: cloudflare/boringtun
-          ref: boringtun-cli-${{ env.TAG }}
-      - name: Get Cargo config additions
-        uses: actions/download-artifact@v3
-        with:
-          name: config-append.toml
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -54,9 +39,20 @@ jobs:
       - name: Install Cross for Cargo
         run: |
           cargo install cross --git https://github.com/cross-rs/cross
+      - name: Checkout Local
+        uses: actions/checkout@v3
+        with:
+          path: boringtun-static
+      - name: Checkout boringtun
+        uses: actions/checkout@v3
+        with:
+          repository: cloudflare/boringtun
+          ref: boringtun-cli-${{ env.TAG }}
+          path: boringtun
       - name: Compile Binaries
         run: |
-          cat config-append.toml >> ~/.cargo/config.toml
+          cd boringtun
+          cat ../boringtun-static/config-append.toml >> .cargo/config.toml
 
           mkdir -p dist
 
@@ -65,13 +61,8 @@ jobs:
             cross build --release --target=${TARGET}
             XZ_OPT=-9 tar -C target/${TARGET}/release -Jcvf dist/boringtun-cli-${TAG}-${TARGET}.tar.xz boringtun-cli
           done
-      - name: Get legacy kernel compilation artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: boringtun-legacy-kernel.tar.xz
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            boringtun-legacy-kernel.tar.xz
-            dist/*
+            boringtun/dist/*
