@@ -69,10 +69,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: boringtun-legacy-kernel.tar.xz
-          path: dist/boringtun-legacy-kernel.tar.xz
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
+            boringtun-legacy-kernel.tar.xz
             dist/*
-
