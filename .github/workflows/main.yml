@@ -26,7 +26,7 @@ jobs:
           sudo /bin/sh -c "wget https://github.com/earthly/earthly/releases/download/v0.6.30/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly"
       - name: Build artifacts using Earthly
         run: |
-          earthly +all --TAG=${TAG}
+          earthly +all --TAG="$TAG"
       - name: Upload legacy kernel compilation artifact
         uses: actions/upload-artifact@v3
         with:

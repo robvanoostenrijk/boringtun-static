@@ -10,6 +10,7 @@ COPY ["atomic-u32.patch", "/usr/src"]
 
 RUN <<EOF
 set -x
+echo Compiling for boringtun-cli-${BORINGTUN_TAG}
 apt-get update
 apt-get install \
 	build-essential \
