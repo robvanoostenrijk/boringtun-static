@@ -23,6 +23,6 @@ package:
 	SAVE ARTIFACT /usr/src/boringtun/dist/boringtun.tar.xz AS LOCAL ./dist/boringtun-legacy-kernel.tar.xz
 
 all:
-	ARG tag
+	ARG TAG
 	BUILD +clean
 	BUILD --platform=linux/amd64 +package --TAG=$TAG
