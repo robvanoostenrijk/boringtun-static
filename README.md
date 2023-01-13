@@ -4,8 +4,8 @@ This repository leverages GitHub Actions and [cross-rs](https://github.com/cross
 
 Compilation is done using Cargo/Cross and results in the following executables:
 
-- aarch64-unknown-linux-gnu  
-boringtun-cli: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, BuildID[sha1]=0f13c4a1a8a819208ea0b93c837dfc47211bbf7a, for GNU/Linux 3.7.0, stripped
+- aarch64-unknown-linux-gnu :white_check_mark: Officially supported target  
+boringtun-cli: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, for GNU/Linux 3.7.0, stripped
 
 - aarch64-unknown-linux-musl  
 boringtun-cli: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped
@@ -13,8 +13,8 @@ boringtun-cli: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statica
 - arm-unknown-linux-gnueabihf  
 boringtun-cli: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, for GNU/Linux 4.19.21, stripped
 
-- armv7-unknown-linux-gnueabihf  
-boringtun-cli: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, BuildID[sha1]=3290baffa4a932ab7cf000d5093b704723cf5d62, for GNU/Linux 3.2.0, stripped
+- armv7-unknown-linux-gnueabihf :white_check_mark: Officially supported target  
+boringtun-cli: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, for GNU/Linux 3.2.0, stripped
 
 - armv7-unknown-linux-musleabi  
 boringtun-cli: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, stripped
@@ -22,15 +22,36 @@ boringtun-cli: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), staticall
 - armv7-unknown-linux-musleabihf  
 boringtun-cli: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, stripped
 
-- x86_64-unknown-linux-gnu  
-boringtun-cli: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), static-pie linked, BuildID[sha1]=da39374a83d5a581ed75d072a620352d3946c785, for GNU/Linux 3.2.0, stripped
+- x86_64-unknown-linux-gnu :white_check_mark: Officially supported target  
+boringtun-cli: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), static-pie linked, for GNU/Linux 3.2.0, stripped
 
 - x86_64-unknown-linux-musl  
 boringtun-cli: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), static-pie linked, stripped
 
-The arm executables are usable on [OpenWRT](https://openwrt.org/), [AsusWRT](https://www.asuswrt-merlin.net/) & [DD-WRT](https://dd-wrt.com/) routers.
+### Legacy Kernels
 
-The included script `generate-artifacts.sh` executes the docker build and places the generated artifacts into `./dist`.
+For very old devices using legacy 2.6.x+ kernels, usually router firmwares. There are a set of experimental compiles available:
+
+- arm-unknown-linux-gnueabi  
+boringtun-cli: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, for GNU/Linux 2.6.32, BuildID[sha1]=a99e8f3161e01590d7b9e2294b49db39837c9e7e, stripped
+
+- arm-unknown-linux-musleabi   
+boringtun-cli: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, stripped
+
+- x86_64-unknown-linux-gnu  
+boringtun-cli: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, for GNU/Linux 2.6.24, stripped
+
+### 32-bit armv5 builds
+
+Very experimental 32-bit builds for very old armv5 based devices with legacy 2.6.x+ kernels
+
+- armv5te-unknown-linux-gnueabi  
+boringtun-cli: ELF 32-bit LSB shared object, ARM, EABI5 version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.3, for GNU/Linux 2.6.32, stripped
+
+- armv5te-unknown-linux-musleabi  
+boringtun-cli: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, stripped
+
+The arm executables should be usable on [OpenWRT](https://openwrt.org/), [AsusWRT](https://www.asuswrt-merlin.net/) & [DD-WRT](https://dd-wrt.com/) routers.
 
 The `wg-go` utility to allow WireGuard configuration on ARM devices can be installed from https://github.com/seud0nym/openwrt-wireguard-go/.
 
